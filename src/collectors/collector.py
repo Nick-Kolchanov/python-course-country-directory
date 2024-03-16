@@ -23,7 +23,7 @@ from collectors.models import (
     CurrencyInfoDTO,
     WeatherInfoDTO,
     NewsInfoDTO,
-    SingleNewsDTO
+    SingleNewsDTO,
 )
 from settings import (
     MEDIA_PATH,
@@ -31,7 +31,7 @@ from settings import (
     CACHE_TTL_CURRENCY_RATES,
     CACHE_TTL_WEATHER,
     CACHE_TTL_NEWS,
-    NEWS_COUNT_PER_COUNTRY
+    NEWS_COUNT_PER_COUNTRY,
 )
 
 
@@ -231,7 +231,7 @@ class WeatherCollector(BaseCollector):
             )
 
         return None
-    
+
 
 class NewsCollector(BaseCollector):
     """
@@ -262,9 +262,7 @@ class NewsCollector(BaseCollector):
             filename = f"{location.capital}_{location.alpha2code}".lower()
             if await self.cache_invalid(filename=filename):
                 # если кэш уже невалиден, то актуализируем его
-                result = await self.client.get_news(
-                    f"{location.alpha2code}"
-                )
+                result = await self.client.get_news(f"{location.alpha2code}")
                 if result:
                     result_str = json.dumps(result)
                     async with aiofiles.open(
@@ -292,13 +290,11 @@ class NewsCollector(BaseCollector):
                 news_data.append(
                     SingleNewsDTO(
                         title=result["articles"][i]["title"],
-                        description=result["articles"][i]["description"]
+                        description=result["articles"][i]["description"],
                     )
                 )
-                    
-            return NewsInfoDTO(
-                news=news_data
-            )
+
+            return NewsInfoDTO(news=news_data)
 
         return None
 
@@ -309,7 +305,7 @@ class Collectors:
         return await asyncio.gather(
             CurrencyRatesCollector().collect(),
             CountryCollector().collect(),
-            NewsCollector().collect()
+            NewsCollector().collect(),
         )
 
     @staticmethod

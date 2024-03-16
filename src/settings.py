@@ -31,4 +31,4 @@ CACHE_TTL_WEATHER: int = int(os.getenv("CACHE_TTL_WEATHER", "10_700"))
 # время актуальности данных о новостях (в секундах), по умолчанию - час
 CACHE_TTL_NEWS: int = int(os.getenv("CACHE_TTL_NEWS", "3_600"))
 
-NEWS_COUNT_PER_COUNTRY: Optional[str] = os.getenv("NEWS_COUNT_PER_COUNTRY")
+NEWS_COUNT_PER_COUNTRY: int = int(os.getenv("NEWS_COUNT_PER_COUNTRY", "3"))

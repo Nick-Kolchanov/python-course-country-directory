@@ -159,6 +159,7 @@ class WeatherInfoDTO(BaseModel):
     description: str
     visibility: float
 
+
 class SingleNewsDTO(BaseModel):
     """
     Модель данных об одной новости.

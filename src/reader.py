@@ -2,23 +2,23 @@
 Поиск собранной информации в файлах на диске.
 """
 
+from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Optional
-from datetime import datetime, timezone
 
 from collectors.collector import (
     CountryCollector,
     CurrencyRatesCollector,
+    NewsCollector,
     WeatherCollector,
-    NewsCollector
 )
 from collectors.models import (
     CountryDTO,
     CurrencyInfoDTO,
     LocationDTO,
     LocationInfoDTO,
+    NewsInfoDTO,
     WeatherInfoDTO,
-    NewsInfoDTO
 )
 
 
@@ -49,7 +49,7 @@ class Reader:
                 weather=weather,
                 currency_rates=currency_rates,
                 news=news_data,
-                timestamp=datetime.now(timezone.utc)
+                timestamp=datetime.now(timezone.utc),
             )
 
         return None
@@ -81,7 +81,7 @@ class Reader:
         :return:
         """
         return await WeatherCollector.read(location=location)
-    
+
     @staticmethod
     async def get_news(location: LocationDTO) -> Optional[NewsInfoDTO]:
         """
